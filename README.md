@@ -4,10 +4,13 @@
 
 ## Spis treści
 * [Cel projektu](#cel-projektu)
-* [Podstawowe pojęcia](#podstawowe-pojecia)
+* [Podstawowe pojęcia](#podstawowe-pojęcia)
 * [Technologie](#technologie)
-* [Setup](#setup)
+* [Konfiguracja oprogramowania](#konfiguracja-oprogramowania)
+* [Uruchomienie oprogramowania](#uruchomienie-oprogramowania)
 * [Funcjonalności](#funcjonalnosci)
+* [TODO](#todo)
+
 
 ## Cel projektu
 Celem projektu było napisanie oprogramowania obliczającego dynamiczną macierz przepływu na podstawie natężeń ruchu.
@@ -22,7 +25,7 @@ Miasto było traktowane jak graf, w którym skrzyżowania były węzłami, a dro
 * symulator SUMO
 
 ## Konfiguracja oprogramowania
-
+Konfiguracja oprogramowania wymaga następujących czynności: utworzenie mapy dla symulatora SUMO, określenie bazowego ciągu macierzy przepływu oraz dostosowania parametrów w pliku konfiguracyjnym config.py.
 ### Utworzenie mapy dla symulatora SUMO
 Mapę stanowią dwa pliki: map.net.xml oraz map.taz.xml.  map.net.xml definiuje węzły i połączenia między nimi. map.taz.xml określa definicje stref TAZ(Traffic Assignmeng Zone). Strefa TAZ składa się z krawędzi, które są podzielone na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
 Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org). Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu createNet.py.
@@ -237,7 +240,7 @@ Znaczenie parametrów:
 * mutprob_online - prawdopodobieństwo mutacji
 * t - numer przedziału czasowego dla którego estymowana jest macierz przepływu
 
-##Uruchomienie oprogramowania
+## Uruchomienie oprogramowania
 0. Przetestuj konfigurację oprogramowania za pomocą polecenia python simTestOD.py (aby posłużyć się danymi z pliku OD.txt) lub python simTestOD.py (aby posłużyć się danymi z plików DOD.txt i ODpairs.txt). Jeśli w symulacji dostrzeżono pewne nieprawidłowości, to należ poprawić pewne elementy konfiguracji np. sieć map.net.xml za pomocą programu NETEDIT lub plik config.py.
 1. Wygeneruj dane za pomocą polecenia: python generateDataFromOD.py (aby posłużyć się danymi z pliku OD.txt) lub python generateDataFromDOD.py (aby posłużyć się danymi z plików DOD.txt i ODpairs.txt).
 2. Wytrenuj i przetestuj model CNN za pomocą polecenia: python trainCNN.py
@@ -249,6 +252,6 @@ Znaczenie parametrów:
 * Konfigurowanie, trenowanie i testowanie modeli sieci neuronowych
 * Poszukiwanie dynamicznej macierzy przepływu
 
-To-do list:
+## TODO
 * Graficzny interfejs użytkownika
 * Refaktoryzacja kodu
