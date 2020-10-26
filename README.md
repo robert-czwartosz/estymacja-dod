@@ -290,7 +290,7 @@ W pierwszej kolumnie znajduje się numer pary źródło-cel (OD), będący numer
 4. Uruchom algorytm genetyczny poleceniem: `python GAonline.py`, aby uzyskać macierz przepływu dla danego przedziału czasowego
 
 ## Funkcjonalności
-* Generowanie danych
+* Generowanie danych dla symulatora SUMO
 * Konfigurowanie, trenowanie i testowanie modeli sieci neuronowych
 * Poszukiwanie dynamicznej macierzy przepływu
 
