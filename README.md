@@ -99,7 +99,10 @@ netconvert --osm-files map.osm -o map.net.xml
 netconvert -s map.net.xml --remove-edges.by-type highway.bridleway,highway.bus_guideway,highway.cycleway,highway.footway,highway.ford,highway.path,highway.pedestrian,highway.raceway,highway.service,highway.stairs,highway.step,highway.steps,railway.highspeed,railway.light_rail,railway.preserved,railway.rail,railway.subway,railway.tram,highway.living_street --remove-edges.isolated true -o map.net.xml
 ```
 3. Za pomocą programu NETEDIT(polecenie `netedit map.net.xml`) usuń z sieci zbędne węzły i krawędzie.
-![NETEDIT](images/netedit2.png "Okno programu NETEDIT")
+Przed usunięciem zbędnych węzłów i krawędzi:
+![NETEDIT przed](images/neteditOsm.png "Okno programu NETEDIT przed usunięciem zbędnych węzłów i krawędzi")
+Po usunięciu zbędnych węzłów i krawędzi:
+![NETEDIT po](images/netedit2.png "Okno programu NETEDIT po usunięciu zbędnych węzłów i krawędzi")
 4. Stwórz plik map.taz.xml w folderze [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/) zawierające definicje badanych węzłów sieci.
 
 Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
@@ -122,6 +125,12 @@ Składnia pliku map.taz.xml:
 ```
 
 Każdy znacznik TAZ składa się z listy identyfikatorów krawędzi separowanych spacjami. Identyfikator krawędzi można odczytać z programu NETEDIT w polu id poprzez kliknięcie na daną krawędź. Pod polem id jest również pole name, które pomaga w określeniu nazwy ulicy na jakiej znajduje się dana krawędź. Jeśli to pole jest puste, to można posłużyć się mapą Google w celu ustalenia nazwy ulicy.
+
+W pracy dobrano strefy TAZ w taki sposób, aby uzyskać następującą strukturę:
+![legnicka TAZ](images/legnicka.png "Legnicka - badana struktura")
+
+Przykładowa sieć z zaznaczonymi krawędziami należącymi do stref TAZ:
+![TAZ](images/TAZ.png "Strefy TAZ")
 
 5. Utwórz plik edges.txt w folderze [/sumo/detectors](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors) zawierającego krawędzie, na których będą zliczane pojazdy.
 
