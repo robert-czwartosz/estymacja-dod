@@ -40,18 +40,18 @@ Zaletą drugiego sposobu(OpenStreetMap) jest możliwość dokładnego odwzorowan
 
 #### Sposób 1: utworzenie własnej mapy
 Najpierw należy utworzyć plik **map_net.txt** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/); przykładowa zawartość:
-<blockquote>
-<p>`~ 	Init node 	Term node	;
-	1	2	;
-	1	3	;
-	2	1	;
-	2	6	;
-	3	1	;
-.
-.
-.
-	24	23	;`</p>
-</blockquote>
+
+	~ 	Init node 	Term node	;
+		1	2	;
+		1	3	;
+		2	1	;
+		2	6	;
+		3	1	;
+	.
+	.
+	.
+		24	23	;
+
 
 W pliku zawarte są możliwe połączenia pomiędzy węzłami.
 
