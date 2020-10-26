@@ -17,7 +17,9 @@ Celem projektu było napisanie oprogramowania obliczającego dynamiczną macierz
 
 ## Podstawowe pojęcia
 
-Miasto było traktowane jak **graf**, w którym skrzyżowania były węzłami, a drogi krawędziami skierowanymi. **Natężenie ruchu** było definiowane jako ilość pojazdów, które przejechały z danego węzła źródłowego do węzła docelowego (sąsiadującego z węzłem źródłowym). **Przepływ** był definiowany jako ilość pojazdów rozpoczynających podróż z danego węzła źródłowego do danego węzła docelowego w danym przedziale czasowym. Z kolei **macierz przepływu** informuje o przepływach pomiędzy dowolną parą węzłów w danym przedziale czasowym. **Dynamiczna macierz przepływu** jest ciągiem macierzy przepływu dla kolejnych przedziałów czasowych.
+Miasto było traktowane jak **graf**, w którym skrzyżowania były węzłami, a drogi krawędziami skierowanymi. **Natężenie ruchu** było definiowane jako ilość pojazdów, które przejechały z danego węzła źródłowego do węzła docelowego (sąsiadującego z węzłem źródłowym). **Przepływ** był definiowany jako ilość pojazdów rozpoczynających podróż z danego węzła źródłowego do danego węzła docelowego w danym przedziale czasowym. 
+
+**Macierz przepływu** informuje o przepływach pomiędzy dowolną parą węzłów w danym przedziale czasowym. **Dynamiczna macierz przepływu** jest ciągiem macierzy przepływu dla kolejnych przedziałów czasowych.
 
 ## Technologie
 * Python 3
@@ -26,11 +28,16 @@ Miasto było traktowane jak **graf**, w którym skrzyżowania były węzłami, a
 
 ## Konfiguracja oprogramowania
 Konfiguracja oprogramowania wymaga następujących czynności: utworzenie mapy dla symulatora SUMO, określenie bazowego ciągu macierzy przepływu oraz dostosowania parametrów w pliku konfiguracyjnym [config.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/config.py).
+
 ### Utworzenie mapy dla symulatora SUMO
-Mapę składa się z sieci ([map.net.xml](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/map.net.xml)), definicji stref TAZ ([map.taz.xml](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/map.taz.xml)) oraz detektorów natężenia ruchu([edges.txt](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors/edges.txt)). Sieć definiuje węzły i połączenia między nimi. Strefa TAZ(Traffic Assignmeng Zone) składa się z krawędzi, które są podzielone na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
-Detektory pozwalają zmierzyć natężenie ruchu na wybranych krawędziach. W pliku [edges.txt](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors/edges.txt) znajduje się lista krawędzi, na których powinien odbywać się pomiar.
-Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org). Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu [createNet.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/createNet.py).
+Mapa składa się z sieci ([map.net.xml](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/map.net.xml)), definicji stref TAZ ([map.taz.xml](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/map.taz.xml)) oraz detektorów natężenia ruchu([edges.txt](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors/edges.txt)). Sieć definiuje węzły i połączenia między nimi. Strefa TAZ(Traffic Assignmeng Zone) składa się z krawędzi, które są podzielone na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają". Detektory pozwalają zmierzyć natężenie ruchu na wybranych krawędziach. W pliku [edges.txt](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors/edges.txt) znajduje się lista krawędzi, na których powinien odbywać się pomiar.
+
+Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org).
+
+Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu [createNet.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/createNet.py).
+
 Zaletą drugiego sposobu jest możliwość dokładnego odwzorowania dowolnego miasta przy minimalnym nakładzie pracy poświęconej na konfigurację. Wadą tego sposobu mogą być nadmiarowe połączenia, które umożliwiają poruszanie się pojazdów trasami niezgodnymi z założeniami badań.
+
 #### Sposób 1: utworzenie własnej mapy
 Najpierw należy utworzyć plik **map_net.txt** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/); przykładowa zawartość:
 ~ 	Init node 	Term node	;
