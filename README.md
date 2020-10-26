@@ -99,6 +99,7 @@ Aby wygenerować pliki **map.net.xml** oraz **map.taz.xml** w katalogu [/sumo](h
 	netconvert -s map.net.xml --remove-edges.by-type highway.bridleway,highway.bus_guideway,highway.cycleway,highway.footway,highway.ford,highway.path,highway.pedestrian,highway.raceway,highway.service,highway.stairs,highway.step,highway.steps,railway.highspeed,railway.light_rail,railway.preserved,railway.rail,railway.subway,railway.tram,highway.living_street --remove-edges.isolated true -o map.net.xml
 3. Za pomocą programu netedit(polecenie netedit map.net.xml) usuń z sieci zbędne węzły i krawędzie.
 4. Stwórz plik map.taz.xml w folderze[/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/) zawierające definicje badanych węzłów sieci.
+
 Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
 Składnia pliku map.taz.xml:
 ```
@@ -117,8 +118,11 @@ Składnia pliku map.taz.xml:
 	.
 </additional>
 ```
+
 Każdy znacznik TAZ składa się z listy identyfikatorów krawędzi separowanych spacjami. Identyfikator krawędzi można odczytać z programu NETEDIT w polu id poprzez kliknięcie na daną krawędź. Pod polem id jest również pole name, które pomaga w określeniu nazwy ulicy na jakiej znajduje się dana krawędź. Jeśli to pole jest puste, to można posłużyć się mapą Google w celu ustalenia nazwy ulicy.
+
 5. Utwórz plik edges.txt w folderze [/sumo/detectors](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors) zawierającego krawędzie, na których będą zliczane pojazdy.
+
 Przykładowa zawartość:
 
 	Source 15 1 114017938 
@@ -132,6 +136,7 @@ Przykładowa zawartość:
 	.
 	.
 	T 71 1 286864434#5 
+
 W pierwszej kolumnie znajduje się nazwa typu krawędzi (Source - początek trasy, Sink - zakończenie trasy, T - krawędź przejezdna). W kolumnie 2 i 3 znajduje się identyfikator(według rysunku przedstawionego na początku rozdziału) węzła początkowego i końcowego. W czwartej kolumnie znajduje się identyfikator krawędzi, który można odczytać w programie NETEDIT. Każda linia powinna być zakończona spacją.
 
 #### Sposób 3: stworzenie/edytowanie mapy w programie NETEDIT
