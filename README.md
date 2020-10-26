@@ -1,16 +1,18 @@
 
 
 # Estymacja dynamicznej macierzy przepływu w aglomeracji miejskiej
-> Here goes your awesome project description!
 
-## Table of contents
+## Spis treści
 * [Cel projektu](#cel-projektu)
+* [Podstawowe pojęcia](#podstawowe-pojecia)
 * [Technologie](#technologie)
 * [Setup](#setup)
 * [Funcjonalności](#funcjonalnosci)
 
 ## Cel projektu
-Projekt zrealizowałem w trakcie studiów w ramach pracy dyplomowej magisterskiej. Celem projektu było napisanie oprogramowania obliczającego dynamiczną macierz przepływu na podstawie natężeń ruchu.
+Celem projektu było napisanie oprogramowania obliczającego dynamiczną macierz przepływu na podstawie natężeń ruchu.
+
+## Podstawowe pojęcia
 
 Miasto było traktowane jak graf, w którym skrzyżowania były węzłami, a drogi krawędziami skierowanymi. Natężenie ruchu było definiowane jako ilość pojazdów, które przejechały z danego węzła źródłowego do węzła docelowego (sąsiadującego z węzłem źródłowym). Przepływ był definiowany jako ilość pojazdów rozpoczynających podróż z danego węzła źródłowego do danego węzła docelowego w danym przedziale czasowym. Z kolei macierz przepływu informuje o przepływach pomiędzy dowolną parą węzłów w danym przedziale czasowym. Dynamiczna macierz przepływów jest ciągiem macierzy przepływów dla kolejnych przedziałów czasowych.
 
@@ -19,14 +21,13 @@ Miasto było traktowane jak graf, w którym skrzyżowania były węzłami, a dro
 * TensorFlow 1.15.0
 * symulator SUMO
 
-## Setup
-###Konfiguracja oprogramowania
+## Konfiguracja oprogramowania
 
-####Utworzenie mapy dla symulatora SUMO
+### Utworzenie mapy dla symulatora SUMO
 Mapę stanowią dwa pliki: map.net.xml oraz map.taz.xml.  map.net.xml definiuje węzły i połączenia między nimi. map.taz.xml określa definicje stref TAZ(Traffic Assignmeng Zone). Strefa TAZ składa się z krawędzi, które są podzielone na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
 Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org). Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu createNet.py.
 Zaletą drugiego sposobu jest możliwość dokładnego odwzorowania dowolnego miasta przy minimalnym nakładzie pracy poświęconej na konfigurację. Wadą tego sposobu mogą być nadmiarowe połączenia, które umożliwiają poruszanie się pojazdów trasami niezgodnymi z założeniami badań.
-#####Sposób 1: utworzenie własnej mapy
+#### Sposób 1: utworzenie własnej mapy
 Najpierw należy utworzyć plik map_net.txt w katalogu /sumo; przykładowa zawartość:
 ~ 	Init node 	Term node	;
 	1	2	;
@@ -73,7 +74,7 @@ Aby wygenerować pliki map.net.xml oraz map.taz.xml w katalogu /sumo, należy ur
 python createNet.py
 netconvert --node-files map.nod.xml --edge-files map.edg.xml -t map.type.xml -o map.net.xml
 
-######Sposób 2: skorzystanie z OpenStreetMap
+#### Sposób 2: skorzystanie z OpenStreetMap
 
 1. Pobierz mapę z OpenStreetMap(https://www.openstreetmap.org) i przenieś plik .map do folderu /sumo
 2. Uruchom następujące polecenia: 
@@ -113,18 +114,18 @@ T 1 71 303103884
 T 71 1 286864434#5 
 W pierwszej kolumnie znajduje się nazwa typu krawędzi (Source - początek trasy, Sink - zakończenie trasy, T - krawędź przejezdna). W kolumnie 2 i 3 znajduje się identyfikator(według rysunku przedstawionego na początku rozdziału) węzła początkowego i końcowego. W czwartej kolumnie znajduje się identyfikator krawędzi, który można odczytać w programie NETEDIT. Każda linia powinna być zakończona spacją.
 
-######Sposób 3: stworzenie/edytowanie mapy w programie NETEDIT
+#### Sposób 3: stworzenie/edytowanie mapy w programie NETEDIT
 Po zastosowaniu sposobu 2, może się okazać że sieć transportowa(map.net.xml) wymaga edycji. Wówczas należy użyć programu NETEDIT, aby usunąć, dodać lub zmodyfikować pewne elementy pliku map.net.xml.
 Aby edytować stworzoną sieć, wystarczy uruchomić polecenie: netedit map.net.xml.
 
-#####Określenie bazowego ciągu macierzy przepływu
+### Określenie bazowego ciągu macierzy przepływu
 Aby uruchomić symulację SUMO, należy podać mapę oraz ciąg macierzy przepływu.
 Ciąg macierzy przepływu jest losowo generowany na podstawie bazowego ciągu macierzy przepływu.
 Macierz przepływów(lub ciąg macierzy) może być zmierzona np. poprzez śledzenie pojazdów po numerach rejestracyjnych.
 Są dwa sposoby na uzyskanie bazowego ciągu macierzy przepływu: 
 1. Mając zmierzoną macierz przepływu, jej wartości są dzielone przez liczbę przedziałów czasowych i powielenie jej.
 2. Zmierzony ciąg macierzy przepływu, jest jednocześnie bazowym ciągiem macierzy przepływu.
-######Sposób 1
+#### Sposób 1
 Utwórz plik OD.txt z macierzą przepływu opisującej ruch w badanym okresie czasu, skłądającego się z mniejszych przedziałów czasowych; przykładowa zawartość:
 source\\dest,10,15,19,690,699,710,719,760,769,910,919,980,989,1449,2225
 10,0,1301.4,625.1,5.9,34.1,75.0,269.0,38.2,79.5,77.7,116.4,263.5,321.9,1.6,38.0
@@ -145,7 +146,7 @@ source\\dest,10,15,19,690,699,710,719,760,769,910,919,980,989,1449,2225
 Bazowa macierz przepływów powinna zawierać średnie przepływy pomiędzy poszczególnymi węzłami.
 
 Macierz nie wymaga dzielenia przez ilość przedziałów czasowych, ponieważ to zostanie wykonane w programie generateDataFromOD.py.
-######Sposób 2
+#### Sposób 2
 Utwórz plik ODpairs.txt z parami źródło-cel (OD); przykładowa zawartość:
 1O,2D,
 1O,3D,
@@ -173,9 +174,9 @@ Utwórz plik DOD.txt z bazowym ciągiem macierzy przepływu w głównym katalogu
 
 W pierwszej kolumnie znajduje się numer pary źródło-cel (OD), będący numerem linii zawierającej daną parę w pliku ODpairs.txt. Druga kolumna zawiera czasy trwania przepływów, które znajdują się w trzeciej kolumnie. Kolejne kolumny podają informacje o kolejnych przepływach (nieparzyste numery kolumn: 5, 7, ...) i o czasach ich trwania (parzyste numery kolumn: 4, 6, ...).
 
-#####. Dostosuj parametry w pliku config.py
+### Dostosuj parametry w pliku config.py
 Znaczenie parametrów:
-###### Parametry dotyczące generowania danych
+#### Parametry dotyczące generowania danych
 * processes - ilość procesów generujących danych(nie powinna przekraczać liczby wątków procesora)
 * continuePrevious - określa czy zostawić(continuePrevious=True) poprzednio wygenerowane dane, czy usunąć
 * NsamplesPrior - ilość próbek(ciągów macierzy OD) danych apriorycznych
@@ -215,7 +216,7 @@ Znaczenie parametrów:
 * durouterOptions - opcje zastosowane w programie duarouter
 * sumoOptions - opcje zastosowane w programie sumo
 
-##### Parametry dotyczące trenowania sieci CNN
+#### Parametry dotyczące trenowania sieci CNN
 * scaling - określa czy dane są skalowane
 * epochs - ilość epok, którą trwa trening
 * early_stopping - ilość epok po których powinna nastąpić poprawa funkcji strat (jeśli f. strat się nie poprawi trening jest przerywany)
@@ -223,20 +224,20 @@ Znaczenie parametrów:
 * numCNNFilters - ilość filtrów w poszczególnych warstwach konwolucyjnych
 * ksi, eta - parametry warstwy SAAF zaimplementowanej w pliku saaf.py
 
-##### Parametry dotyczące algorytmu genetycznego Offline
+#### Parametry dotyczące algorytmu genetycznego Offline
 * Noffline - ilość osobników w populacji
 * NGENoffline - ilość generacji
 * crossprob_offline - prawdopodobieństwo krzyżowania
 * mutprob_offline - prawdopodobieństwo mutacji
 
-##### Parametry dotyczące algorytmu genetycznego Online
+#### Parametry dotyczące algorytmu genetycznego Online
 * Nonline - ilość osobników w populacji
 * NGENonline - ilość generacji
 * crossprob_online - prawdopodobieństwo krzyżowania
 * mutprob_online - prawdopodobieństwo mutacji
 * t - numer przedziału czasowego dla którego estymowana jest macierz przepływu
 
-###Uruchomienie oprogramowania
+##Uruchomienie oprogramowania
 0. Przetestuj konfigurację oprogramowania za pomocą polecenia python simTestOD.py (aby posłużyć się danymi z pliku OD.txt) lub python simTestOD.py (aby posłużyć się danymi z plików DOD.txt i ODpairs.txt). Jeśli w symulacji dostrzeżono pewne nieprawidłowości, to należ poprawić pewne elementy konfiguracji np. sieć map.net.xml za pomocą programu NETEDIT lub plik config.py.
 1. Wygeneruj dane za pomocą polecenia: python generateDataFromOD.py (aby posłużyć się danymi z pliku OD.txt) lub python generateDataFromDOD.py (aby posłużyć się danymi z plików DOD.txt i ODpairs.txt).
 2. Wytrenuj i przetestuj model CNN za pomocą polecenia: python trainCNN.py
