@@ -21,6 +21,8 @@ Miasto było traktowane jak **graf**, w którym skrzyżowania były węzłami, a
 
 **Macierz przepływu** informuje o przepływach pomiędzy dowolną parą węzłów w danym przedziale czasowym. **Dynamiczna macierz przepływu** jest ciągiem macierzy przepływu dla kolejnych przedziałów czasowych.
 
+Więcej wyjaśnień znajduje się w [pracy magisterskiej](https://github.com/robert-czwartosz/estymacja-dod/blob/main/EstymacjaDOD.pdf).
+
 ## Technologie
 * Python 3
 * TensorFlow 1.15.0
