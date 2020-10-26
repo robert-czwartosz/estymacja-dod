@@ -8,7 +8,7 @@
 * [Technologie](#technologie)
 * [Konfiguracja oprogramowania](#konfiguracja-oprogramowania)
 * [Uruchomienie oprogramowania](#uruchomienie-oprogramowania)
-* [Funcjonalności](#funcjonalnosci)
+* [Funcjonalności](#funcjonalności)
 * [TODO](#todo)
 
 
@@ -17,7 +17,7 @@ Celem projektu było napisanie oprogramowania obliczającego dynamiczną macierz
 
 ## Podstawowe pojęcia
 
-Miasto było traktowane jak graf, w którym skrzyżowania były węzłami, a drogi krawędziami skierowanymi. Natężenie ruchu było definiowane jako ilość pojazdów, które przejechały z danego węzła źródłowego do węzła docelowego (sąsiadującego z węzłem źródłowym). Przepływ był definiowany jako ilość pojazdów rozpoczynających podróż z danego węzła źródłowego do danego węzła docelowego w danym przedziale czasowym. Z kolei macierz przepływu informuje o przepływach pomiędzy dowolną parą węzłów w danym przedziale czasowym. Dynamiczna macierz przepływów jest ciągiem macierzy przepływów dla kolejnych przedziałów czasowych.
+Miasto było traktowane jak **graf**, w którym skrzyżowania były węzłami, a drogi krawędziami skierowanymi. **Natężenie ruchu** było definiowane jako ilość pojazdów, które przejechały z danego węzła źródłowego do węzła docelowego (sąsiadującego z węzłem źródłowym). **Przepływ** był definiowany jako ilość pojazdów rozpoczynających podróż z danego węzła źródłowego do danego węzła docelowego w danym przedziale czasowym. Z kolei **macierz przepływu** informuje o przepływach pomiędzy dowolną parą węzłów w danym przedziale czasowym. **Dynamiczna macierz przepływu** jest ciągiem macierzy przepływu dla kolejnych przedziałów czasowych.
 
 ## Technologie
 * Python 3
@@ -25,13 +25,14 @@ Miasto było traktowane jak graf, w którym skrzyżowania były węzłami, a dro
 * symulator SUMO
 
 ## Konfiguracja oprogramowania
-Konfiguracja oprogramowania wymaga następujących czynności: utworzenie mapy dla symulatora SUMO, określenie bazowego ciągu macierzy przepływu oraz dostosowania parametrów w pliku konfiguracyjnym config.py.
+Konfiguracja oprogramowania wymaga następujących czynności: utworzenie mapy dla symulatora SUMO, określenie bazowego ciągu macierzy przepływu oraz dostosowania parametrów w pliku konfiguracyjnym [config.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/config.py).
 ### Utworzenie mapy dla symulatora SUMO
-Mapę stanowią dwa pliki: map.net.xml oraz map.taz.xml.  map.net.xml definiuje węzły i połączenia między nimi. map.taz.xml określa definicje stref TAZ(Traffic Assignmeng Zone). Strefa TAZ składa się z krawędzi, które są podzielone na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
-Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org). Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu createNet.py.
+Mapę składa się z sieci ([map.net.xml](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/map.net.xml)), definicji stref TAZ ([map.taz.xml](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/map.taz.xml)) oraz detektorów natężenia ruchu([edges.txt](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors/edges.txt)). Sieć definiuje węzły i połączenia między nimi. Strefa TAZ(Traffic Assignmeng Zone) składa się z krawędzi, które są podzielone na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
+Detektory pozwalają zmierzyć natężenie ruchu na wybranych krawędziach. W pliku [edges.txt](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors/edges.txt) znajduje się lista krawędzi, na których powinien odbywać się pomiar.
+Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org). Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu [createNet.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/createNet.py).
 Zaletą drugiego sposobu jest możliwość dokładnego odwzorowania dowolnego miasta przy minimalnym nakładzie pracy poświęconej na konfigurację. Wadą tego sposobu mogą być nadmiarowe połączenia, które umożliwiają poruszanie się pojazdów trasami niezgodnymi z założeniami badań.
 #### Sposób 1: utworzenie własnej mapy
-Najpierw należy utworzyć plik map_net.txt w katalogu /sumo; przykładowa zawartość:
+Najpierw należy utworzyć plik **map_net.txt** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/); przykładowa zawartość:
 ~ 	Init node 	Term node	;
 	1	2	;
 	1	3	;
@@ -44,7 +45,7 @@ Najpierw należy utworzyć plik map_net.txt w katalogu /sumo; przykładowa zawar
 	24	23	;
 W pliku zawarte są możliwe połączenia pomiędzy węzłami.
 
-Następnie należy utworzyć plik map_node.txt w katalogu /sumo; przykładowa zawartość:
+Następnie należy utworzyć plik **map_node.txt** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/); przykładowa zawartość:
 Node	X	Y	;
 1	50000	510000	;
 2	320000	510000	;
@@ -73,18 +74,18 @@ Node	X	Y	;
 
 W pliku zawarte położenia węzłów. W pierwszej kolumnie znajduje się nr węzła. W drugiej i trzeciej kolumnie znajdują się współrzędne X i Y węzłów.
 
-Aby wygenerować pliki map.net.xml oraz map.taz.xml w katalogu /sumo, należy uruchomić następujące polecenia: 
-python createNet.py
-netconvert --node-files map.nod.xml --edge-files map.edg.xml -t map.type.xml -o map.net.xml
+Aby wygenerować pliki **map.net.xml** oraz **map.taz.xml** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/), należy uruchomić następujące polecenia: 
+**python createNet.py**
+**netconvert --node-files map.nod.xml --edge-files map.edg.xml -t map.type.xml -o map.net.xml**
 
 #### Sposób 2: skorzystanie z OpenStreetMap
 
-1. Pobierz mapę z OpenStreetMap(https://www.openstreetmap.org) i przenieś plik .map do folderu /sumo
+1. Pobierz mapę z OpenStreetMap(https://www.openstreetmap.org) i przenieś plik .map do folderu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/)
 2. Uruchom następujące polecenia: 
 netconvert --osm-files map.osm -o map.net.xml
 netconvert -s map.net.xml --remove-edges.by-type highway.bridleway,highway.bus_guideway,highway.cycleway,highway.footway,highway.ford,highway.path,highway.pedestrian,highway.raceway,highway.service,highway.stairs,highway.step,highway.steps,railway.highspeed,railway.light_rail,railway.preserved,railway.rail,railway.subway,railway.tram,highway.living_street --remove-edges.isolated true -o map.net.xml
 3. Za pomocą programu netedit(polecenie netedit map.net.xml) usuń z sieci zbędne węzły i krawędzie.
-4. Stwórz plik map.taz.xml w folderze /sumo zawierające definicje badanych węzłów sieci.
+4. Stwórz plik map.taz.xml w folderze[/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/) zawierające definicje badanych węzłów sieci.
 Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
 Składnia pliku map.taz.xml:
 <?xml version="1.0" encoding="UTF-8"?>
@@ -102,7 +103,7 @@ Składnia pliku map.taz.xml:
 	.
 </additional>
 Każdy znacznik TAZ składa się z listy identyfikatorów krawędzi separowanych spacjami. Identyfikator krawędzi można odczytać z programu NETEDIT w polu id poprzez kliknięcie na daną krawędź. Pod polem id jest również pole name, które pomaga w określeniu nazwy ulicy na jakiej znajduje się dana krawędź. Jeśli to pole jest puste, to można posłużyć się mapą Google w celu ustalenia nazwy ulicy.
-5. Utwórz plik edges.txt w folderze /sumo/detectors zawierającego krawędzie, na których będą zliczane pojazdy.
+5. Utwórz plik edges.txt w folderze [/sumo/detectors](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors) zawierającego krawędzie, na których będą zliczane pojazdy.
 Przykładowa zawartość:
 Source 15 1 114017938 
 Sink 1 15 114017937#0 

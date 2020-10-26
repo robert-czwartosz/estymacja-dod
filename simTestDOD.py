@@ -101,27 +101,6 @@ netFile = cfg.netFile
 od2tripsOptions = cfg.od2tripsOptions
 durouterOptions = cfg.durouterOptions
 sumoOptions = cfg.sumoOptions
-
-def plotRunningCars(Cars):
-    
-    bins = np.arange(N)
-    fig, ax = plt.subplots(figsize=(8, 4))
-
-    # Cumulative sum.
-    Cars = Cars.cumsum()
-
-    ax.plot(bins, Cars, 'k--', linewidth=1.5, label='Running cars')
-
-    # Overlay a reversed cumulative histogram.
-
-    # tidy up the figure
-    ax.grid(True)
-    ax.legend(loc='right')
-    ax.set_title('Running cars')
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Cars')
-
-    plt.show()
     
 def plotOD(SumOD, SumDetectorSource):
     ind = np.arange(N)    # the x locations for the groups
@@ -230,7 +209,6 @@ def generateSample(sample):
     print('SumaDetectorSource - SumaDetectorSink: ',SumaDetectorSource - SumaDetectorSink)
     plotOD(SumaOD, SumaDetectorSource)
     plotOD(SumaOD.cumsum(), SumaDetectorSource.cumsum())
-    plotRunningCars(SumaDetectorSource - SumaDetectorSink)
     return InputSample, OutputSample
 
 def generateData(InputDir, SumoDir, OutputDir, MINfrac, MAXfrac, Nsamples,cont, processes=None):
