@@ -104,14 +104,14 @@ for edge in edges:
     #edgeList.append(('T', 'n'+n2, n2_1, n2+'to'+n2_1[1:]))
     
     if n1 not in tazDict.keys():
-        tazElem1 = ET.SubElement(rootTazs, "taz", id='TAZ'+n1)
+        tazElem1 = ET.SubElement(rootTazs, "taz", id='TAZ_'+n1)
         tazDict[n1] = tazElem1
     else:
         tazElem1 = tazDict[n1]
     ET.SubElement(tazElem1, "tazSource", id=n1+'to'+n1_2[1:], weight="1.0")
     ET.SubElement(tazElem1, "tazSink", id=n1_2[1:]+'to'+n1, weight="1.0")
     if n2 not in tazDict.keys():
-        tazElem2 = ET.SubElement(rootTazs, "taz", id='TAZ'+n2)
+        tazElem2 = ET.SubElement(rootTazs, "taz", id='TAZ_'+n2)
         tazDict[n2] = tazElem2
     else:
         tazElem2 = tazDict[n2]

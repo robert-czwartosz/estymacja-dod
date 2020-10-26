@@ -8,7 +8,7 @@
 * [Technologie](#technologie)
 * [Konfiguracja oprogramowania](#konfiguracja-oprogramowania)
 * [Uruchomienie oprogramowania](#uruchomienie-oprogramowania)
-* [Funcjonalności](#funcjonalności)
+* [Funkcjonalności](#funkcjonalności)
 * [TODO](#todo)
 
 
@@ -90,6 +90,7 @@ Aby wygenerować pliki **map.net.xml** oraz **map.taz.xml** w katalogu [/sumo](h
 	python createNet.py
 	netconvert --node-files map.nod.xml --edge-files map.edg.xml -t map.type.xml -o map.net.xml**
 
+Pliki określające strefy TAZ i detektory są generowane przez program [createNet.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/createNet.py).
 #### Sposób 2: skorzystanie z OpenStreetMap
 
 1. Pobierz mapę z OpenStreetMap(https://www.openstreetmap.org) i przenieś plik .map do folderu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/)
@@ -109,7 +110,7 @@ Po usunięciu zbędnych węzłów i krawędzi:
 ![NETEDIT po](images/netedit2.png "Okno programu NETEDIT po usunięciu zbędnych węzłów i krawędzi")
 4. Stwórz plik map.taz.xml w folderze [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/) zawierające definicje badanych węzłów sieci.
 
-Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
+Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają". Identyfikator(id) strefy TAZ powinien być zakończony znakiem "_" + numer węzła np. "_15".
 Składnia pliku map.taz.xml:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -186,7 +187,7 @@ Utwórz plik **OD.txt** z macierzą przepływu opisującej ruch w badanym okresi
 	989,115.5,616.3,146.7,80.1,42.2,49.2,185.5,37.4,94.5,233.2,300.1,580.8,0,33.4,141.0
 	1449,17.4,21.9,13.9,19.2,4.0,10.2,37.3,20.0,1.0,373.0,404.6,3.0,17.9,0,1488.7
 	2225,68.4,371.7,87.3,489.8,374.6,30.0,114.9,60.8,116.8,1835.7,1951.1,377.1,441.0,1236.7,0
-Bazowa macierz przepływów powinna zawierać średnie przepływy pomiędzy poszczególnymi węzłami.
+Bazowa macierz przepływów powinna zawierać średnie przepływy pomiędzy poszczególnymi węzłami. Numery węzłów powinny być zawarte w identyfikatorach (id) stref TAZ. Identyfikator strefy TAZ powinien być zakończony znakiem "_" + numer węzła np. "_15".
 
 Macierz nie wymaga dzielenia przez ilość przedziałów czasowych, ponieważ to zostanie wykonane w programie [generateDataFromOD.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/generateDataFromOD.py).
 #### Sposób 2
@@ -203,7 +204,7 @@ Utwórz plik **ODpairs.txt** z parami źródło-cel (OD); przykładowa zawartoś
 	.
 	24O,23D,
 
-Każdy wiersz zawiera jedną parę OD. Na początku jest nr węzła źródłowego + litera 'O', a po przecinku jest nr węzła docelowego + litera 'D'. Numer węzła zależy od kolejności znaczników taz w pliku **map.taz.xml** np. węzeł będący trzecim znacznikiem taz ma numer 3. Każda linia jest zakończona przecinkiem.
+Każdy wiersz zawiera jedną parę OD. Na początku jest nr węzła źródłowego + litera 'O', a po przecinku jest nr węzła docelowego + litera 'D'. Numery węzłów powinny być zawarte w identyfikatorach (id) stref TAZ. Identyfikator strefy TAZ powinien być zakończony znakiem "_" + numer węzła np. "_15".
 
 Utwórz plik **DOD.txt** z bazowym ciągiem macierzy przepływu w głównym katalogu; przykładowa zawartość:
 
