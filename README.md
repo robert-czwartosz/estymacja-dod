@@ -34,13 +34,13 @@ Mapa składa się z sieci ([map.net.xml](https://github.com/robert-czwartosz/est
 
 Mapę można utworzyć na dwa sposoby. Pierwszym z nich jest podanie współrzędnych węzłów i połączeń pomiędzy nimi. Drugim sposobem jest wyeksportowanie pliku map.osm z OpenStreetMap(https://www.openstreetmap.org).
 
-Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu [createNet.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/createNet.py).
+Zaletą pierwszego z nich jest możliwość stworzenia dowolnego połączenia węzłów oraz brak konieczności ręcznego definiowania stref TAZ i detektorów. Jednak ten sposób ma swoje ograniczenia: wszystkie drogi są dwukierunkowe(2 pasy w każdym kierunku) z ograniczeniem prędkości do 50km/h oraz wszystkie skrzyżowania są kierowane poprzez sygnalizację świetlną. Ominięcie tych ograniczeń jest możliwe tylko poprzez modyfikację kodu programu [createNet.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/createNet.py).
 
-Zaletą drugiego sposobu jest możliwość dokładnego odwzorowania dowolnego miasta przy minimalnym nakładzie pracy poświęconej na konfigurację. Wadą tego sposobu mogą być nadmiarowe połączenia, które umożliwiają poruszanie się pojazdów trasami niezgodnymi z założeniami badań.
+Zaletą drugiego sposobu(OpenStreetMap) jest możliwość dokładnego odwzorowania dowolnego miasta przy minimalnym nakładzie pracy poświęconej na konfigurację. Wadą tego sposobu mogą być nadmiarowe połączenia, które umożliwiają poruszanie się pojazdów trasami niezgodnymi z założeniami badań.
 
 #### Sposób 1: utworzenie własnej mapy
 Najpierw należy utworzyć plik **map_net.txt** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/); przykładowa zawartość:
-~ 	Init node 	Term node	;
+`~ 	Init node 	Term node	;
 	1	2	;
 	1	3	;
 	2	1	;
@@ -49,7 +49,7 @@ Najpierw należy utworzyć plik **map_net.txt** w katalogu [/sumo](https://githu
 .
 .
 .
-	24	23	;
+	24	23	;`
 W pliku zawarte są możliwe połączenia pomiędzy węzłami.
 
 Następnie należy utworzyć plik **map_node.txt** w katalogu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/); przykładowa zawartość:
