@@ -203,7 +203,7 @@ Utwórz plik **ODpairs.txt** z parami źródło-cel (OD); przykładowa zawartoś
 	.
 	24O,23D,
 
-Każdy wiersz zawiera jedną parę OD. Na początku jest nr węzła źródłowego + litera 'O', a po przecinku jest nr węzła docelowego + litera 'D'. Każda linia jest zakończona przecinkiem.
+Każdy wiersz zawiera jedną parę OD. Na początku jest nr węzła źródłowego + litera 'O', a po przecinku jest nr węzła docelowego + litera 'D'. Numer węzła zależy od kolejności znaczników taz w pliku **map.taz.xml** np. węzeł będący trzecim znacznikiem taz ma numer 3. Każda linia jest zakończona przecinkiem.
 
 Utwórz plik **DOD.txt** z bazowym ciągiem macierzy przepływu w głównym katalogu; przykładowa zawartość:
 
