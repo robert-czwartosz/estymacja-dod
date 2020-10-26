@@ -99,6 +99,10 @@ netconvert --osm-files map.osm -o map.net.xml
 netconvert -s map.net.xml --remove-edges.by-type highway.bridleway,highway.bus_guideway,highway.cycleway,highway.footway,highway.ford,highway.path,highway.pedestrian,highway.raceway,highway.service,highway.stairs,highway.step,highway.steps,railway.highspeed,railway.light_rail,railway.preserved,railway.rail,railway.subway,railway.tram,highway.living_street --remove-edges.isolated true -o map.net.xml
 ```
 3. Za pomocą programu NETEDIT(polecenie `netedit map.net.xml`) usuń z sieci zbędne węzły i krawędzie.
+W pracy badano następującą strukturę:
+![TAZ](images/TAZ.png "Strefy TAZ")
+W badaniach ważne było, aby pojazdy nie mogły poruszać się innymi trasami.
+
 Przed usunięciem zbędnych węzłów i krawędzi:
 ![NETEDIT przed](images/neteditOsm.png "Okno programu NETEDIT przed usunięciem zbędnych węzłów i krawędzi")
 Po usunięciu zbędnych węzłów i krawędzi:
@@ -129,7 +133,7 @@ Każdy znacznik TAZ składa się z listy identyfikatorów krawędzi separowanych
 W pracy dobrano strefy TAZ w taki sposób, aby uzyskać następującą strukturę:
 ![legnicka TAZ](images/legnicka.png "Legnicka - badana struktura")
 
-Przykładowa sieć z zaznaczonymi krawędziami należącymi do stref TAZ:
+Sieć z zaznaczonymi krawędziami należącymi do stref TAZ:
 ![TAZ](images/TAZ.png "Strefy TAZ")
 
 5. Utwórz plik edges.txt w folderze [/sumo/detectors](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors) zawierającego krawędzie, na których będą zliczane pojazdy.
@@ -152,8 +156,10 @@ W pierwszej kolumnie znajduje się nazwa typu krawędzi (Source - początek tras
 
 #### Sposób 3: stworzenie/edytowanie mapy w programie NETEDIT
 Po zastosowaniu sposobu 2, może się okazać że sieć transportowa(map.net.xml) wymaga edycji. Wówczas należy użyć programu NETEDIT, aby usunąć, dodać lub zmodyfikować pewne elementy pliku map.net.xml.
-Aby edytować stworzoną sieć, wystarczy uruchomić polecenie: netedit map.net.xml.
-
+Aby edytować stworzoną sieć, wystarczy uruchomić polecenie: 
+```
+netedit map.net.xml.
+```
 ### Określenie bazowego ciągu macierzy przepływu
 Aby uruchomić symulację SUMO, należy podać mapę oraz ciąg macierzy przepływu.
 Ciąg macierzy przepływu jest losowo generowany na podstawie bazowego ciągu macierzy przepływu.
@@ -162,7 +168,7 @@ Są dwa sposoby na uzyskanie bazowego ciągu macierzy przepływu:
 1. Mając zmierzoną macierz przepływu, jej wartości są dzielone przez liczbę przedziałów czasowych i powielenie jej.
 2. Zmierzony ciąg macierzy przepływu, jest jednocześnie bazowym ciągiem macierzy przepływu.
 #### Sposób 1
-Utwórz plik OD.txt z macierzą przepływu opisującej ruch w badanym okresie czasu, skłądającego się z mniejszych przedziałów czasowych; przykładowa zawartość:
+Utwórz plik **OD.txt** z macierzą przepływu opisującej ruch w badanym okresie czasu, skłądającego się z mniejszych przedziałów czasowych; przykładowa zawartość:
 
 	source\\dest,10,15,19,690,699,710,719,760,769,910,919,980,989,1449,2225
 	10,0,1301.4,625.1,5.9,34.1,75.0,269.0,38.2,79.5,77.7,116.4,263.5,321.9,1.6,38.0
@@ -182,9 +188,9 @@ Utwórz plik OD.txt z macierzą przepływu opisującej ruch w badanym okresie cz
 	2225,68.4,371.7,87.3,489.8,374.6,30.0,114.9,60.8,116.8,1835.7,1951.1,377.1,441.0,1236.7,0
 Bazowa macierz przepływów powinna zawierać średnie przepływy pomiędzy poszczególnymi węzłami.
 
-Macierz nie wymaga dzielenia przez ilość przedziałów czasowych, ponieważ to zostanie wykonane w programie generateDataFromOD.py.
+Macierz nie wymaga dzielenia przez ilość przedziałów czasowych, ponieważ to zostanie wykonane w programie [generateDataFromOD.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/generateDataFromOD.py).
 #### Sposób 2
-Utwórz plik ODpairs.txt z parami źródło-cel (OD); przykładowa zawartość:
+Utwórz plik **ODpairs.txt** z parami źródło-cel (OD); przykładowa zawartość:
 
 	1O,2D,
 	1O,3D,
@@ -199,7 +205,7 @@ Utwórz plik ODpairs.txt z parami źródło-cel (OD); przykładowa zawartość:
 
 Każdy wiersz zawiera jedną parę OD. Na początku jest nr węzła źródłowego + litera 'O', a po przecinku jest nr węzła docelowego + litera 'D'. Każda linia jest zakończona przecinkiem.
 
-Utwórz plik DOD.txt z bazowym ciągiem macierzy przepływu w głównym katalogu; przykładowa zawartość:
+Utwórz plik **DOD.txt** z bazowym ciągiem macierzy przepływu w głównym katalogu; przykładowa zawartość:
 
 	1	0.5	0	0.666666667	10	0.666666667	12.5	0.666666667	15	0.666666667	7.5	;
 	2	0.5	0	0.666666667	10	0.666666667	12.5	0.666666667	15	0.666666667	7.5	;
@@ -211,10 +217,9 @@ Utwórz plik DOD.txt z bazowym ciągiem macierzy przepływu w głównym katalogu
 	.
 	528	0.5	0	0.666666667	70	0.666666667	87.5	0.666666667	105	0.666666667	52.5	;
 
-W pierwszej kolumnie znajduje się numer pary źródło-cel (OD), będący numerem linii zawierającej daną parę w pliku ODpairs.txt. Druga kolumna zawiera czasy trwania przepływów, które znajdują się w trzeciej kolumnie. Kolejne kolumny podają informacje o kolejnych przepływach (nieparzyste numery kolumn: 5, 7, ...) i o czasach ich trwania (parzyste numery kolumn: 4, 6, ...).
+W pierwszej kolumnie znajduje się numer pary źródło-cel (OD), będący numerem linii zawierającej daną parę w pliku **ODpairs.txt**. Druga kolumna zawiera czasy trwania przepływów, które znajdują się w trzeciej kolumnie. Kolejne kolumny podają informacje o kolejnych przepływach (nieparzyste numery kolumn: 5, 7, ...) i o czasach ich trwania (parzyste numery kolumn: 4, 6, ...).
 
-### Dostosuj parametry w pliku config.py
-Znaczenie parametrów:
+### Parametry w pliku [config.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/config.py)
 #### Parametry dotyczące generowania danych
 * processes - ilość procesów generujących danych(nie powinna przekraczać liczby wątków procesora)
 * continuePrevious - określa czy zostawić(continuePrevious=True) poprzednio wygenerowane dane, czy usunąć
@@ -277,8 +282,8 @@ Znaczenie parametrów:
 * t - numer przedziału czasowego dla którego estymowana jest macierz przepływu
 
 ## Uruchomienie oprogramowania
-0. Przetestuj konfigurację oprogramowania za pomocą polecenia `python simTestOD.py` (aby posłużyć się danymi z pliku **OD.txt**) lub `python simTestOD.py` (aby posłużyć się danymi z plików **DOD.txt** i **ODpairs.txt**). Jeśli w symulacji dostrzeżono pewne nieprawidłowości, to należ poprawić pewne elementy konfiguracji np. sieć **map.net.xml** za pomocą programu NETEDIT lub plik config.py.
-1. Wygeneruj dane za pomocą polecenia: `python generateDataFromOD.py` (aby posłużyć się danymi z pliku OD.txt) lub `python generateDataFromDOD.py` (aby posłużyć się danymi z plików DOD.txt i ODpairs.txt).
+0. Przetestuj konfigurację oprogramowania za pomocą polecenia `python simTestOD.py` (aby posłużyć się danymi z pliku **OD.txt**) lub `python simTestOD.py` (aby posłużyć się danymi z plików **DOD.txt** i **ODpairs.txt**). Jeśli w symulacji dostrzeżono pewne nieprawidłowości, to należ poprawić pewne elementy konfiguracji np. sieć **map.net.xml** za pomocą programu NETEDIT lub plik [config.py](https://github.com/robert-czwartosz/estymacja-dod/blob/main/config.py).
+1. Wygeneruj dane za pomocą polecenia: `python generateDataFromOD.py` (aby posłużyć się danymi z pliku **OD.txt**) lub `python generateDataFromDOD.py` (aby posłużyć się danymi z plików **DOD.txt** i **ODpairs.txt**).
 2. Wytrenuj i przetestuj model CNN za pomocą polecenia: `python trainCNN.py`
 3. Uruchom algorytm genetyczne poleceniem: `python GA.py`, aby uzyskać wzorcową dynamiczną macierz przepływu
 4. Uruchom algorytm genetyczny poleceniem: `python GAonline.py`, aby uzyskać macierz przepływu dla danego przedziału czasowego
