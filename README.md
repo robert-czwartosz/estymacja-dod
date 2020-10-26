@@ -94,10 +94,11 @@ Aby wygenerować pliki **map.net.xml** oraz **map.taz.xml** w katalogu [/sumo](h
 
 1. Pobierz mapę z OpenStreetMap(https://www.openstreetmap.org) i przenieś plik .map do folderu [/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/)
 2. Uruchom następujące polecenia:
-
+```
 	netconvert --osm-files map.osm -o map.net.xml
 	netconvert -s map.net.xml --remove-edges.by-type highway.bridleway,highway.bus_guideway,highway.cycleway,highway.footway,highway.ford,highway.path,highway.pedestrian,highway.raceway,highway.service,highway.stairs,highway.step,highway.steps,railway.highspeed,railway.light_rail,railway.preserved,railway.rail,railway.subway,railway.tram,highway.living_street --remove-edges.isolated true -o map.net.xml
-3. Za pomocą programu netedit(polecenie netedit map.net.xml) usuń z sieci zbędne węzły i krawędzie.
+```
+3. Za pomocą programu NETEDIT(polecenie `netedit map.net.xml`) usuń z sieci zbędne węzły i krawędzie.
 4. Stwórz plik map.taz.xml w folderze[/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/) zawierające definicje badanych węzłów sieci.
 
 Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
