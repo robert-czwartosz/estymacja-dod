@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <taz id="Jana_pawla_Nord_10">
+      <tazSource id="114017941#1" weight="1.0"/>
+      <tazSink id="286864439" weight="1.0"/>
+    </taz>
+    <taz id="Jana_pawla_Sud_19">
+      <tazSource id="286864436#1" weight="1.0"/>
+      <tazSink id="634946213" weight="1.0"/>
+    </taz>
+    <taz id="Jana_pawla_East_15">
+      <tazSource id="114017938" weight="1.0"/>
+      <tazSink id="114017937#0" weight="1.0"/>
+    </taz>
+
+    <taz id="Rybacka_710">
+      <tazSource id="187405596#0" weight="1.0"/>
+      <tazSink id="187024719" weight="1.0"/>
+    </taz>
+    <taz id="Nabycinska_719">
+      <tazSource id="53183246#0" weight="1.0"/>
+      <tazSink id="53183242#1" weight="1.0"/>
+    </taz>
+
+    <taz id="Poznanska_980">
+      <tazSource id="505291182#1" weight="1.0"/>
+      <tazSink id="-505291182#1" weight="1.0"/>
+    </taz>
+    <taz id="Plac_Strzegomski_989">
+      <tazSource id="37697522#0" weight="1.0"/>
+      <tazSink id="22734251" weight="1.0"/>
+    </taz>
+
+    <taz id="Zachodnia_690">
+      <tazSource id="-247496636#2" weight="1.0"/>
+      <tazSink id="247496636#1" weight="1.0"/>
+    </taz>
+    <taz id="Stacyjna_699">
+      <tazSource id="325023891#0" weight="1.0"/>
+      <tazSink id="-325023891#1" weight="1.0"/>
+    </taz>
+
+    <taz id="Niedzwiedzia_760">
+      <tazSource id="366388872#18" weight="1.0"/>
+      <tazSink id="-366388872#18" weight="1.0"/>
+    </taz>
+    <taz id="Legnicka_769">
+      <tazSource id="495887491#2" weight="1.0"/>
+      <tazSink id="-495887491#2" weight="1.0"/>
+    </taz>
+
+    <taz id="Milenijna_910">
+      <tazSource id="306995774#0" weight="1.0"/>
+      <tazSink id="31586000#2" weight="1.0"/>
+    </taz>
+    <taz id="Na_Ostatnim_Groszu_919">
+      <tazSource id="306971836" weight="1.0"/>
+      <tazSink id="173488366#0" weight="1.0"/>
+    </taz>
+
+    <taz id="Bajana_1449">
+      <tazSource id="-186973297#3" weight="1.0"/>
+      <tazSink id="186973297#2" weight="1.0"/>
+    </taz>
+    <taz id="Lotnicza_West_2225">
+      <tazSource id="186973314" weight="1.0"/>
+      <tazSink id="186973315#3" weight="1.0"/>
+    </taz>
+
+</additional>
