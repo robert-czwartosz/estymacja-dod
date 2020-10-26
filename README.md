@@ -101,8 +101,8 @@ Aby wygenerować pliki **map.net.xml** oraz **map.taz.xml** w katalogu [/sumo](h
 4. Stwórz plik map.taz.xml w folderze[/sumo](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/) zawierające definicje badanych węzłów sieci.
 Każda strefa TAZ jest definiowana jako zbiór krawędzi(edges). Krawędzie można podzielić na źródłowe i docelowe. Z krawędzi źródłowych (source) wyjeżdżają nowe pojazdy. W krawędziach docelowych(sink) kończy się trasa pojazdów i te pojazdy "znikają".
 Składnia pliku map.taz.xml:
-
-	`<?xml version="1.0" encoding="UTF-8"?>
+`
+	<?xml version="1.0" encoding="UTF-8"?>
 	<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
 		<taz id="Jana_pawla_Nord_10">
 		  <tazSource id="114017941#1" weight="1.0"/>
@@ -115,7 +115,8 @@ Składnia pliku map.taz.xml:
 		.
 		.
 		.
-	</additional>`
+	</additional>
+`
 Każdy znacznik TAZ składa się z listy identyfikatorów krawędzi separowanych spacjami. Identyfikator krawędzi można odczytać z programu NETEDIT w polu id poprzez kliknięcie na daną krawędź. Pod polem id jest również pole name, które pomaga w określeniu nazwy ulicy na jakiej znajduje się dana krawędź. Jeśli to pole jest puste, to można posłużyć się mapą Google w celu ustalenia nazwy ulicy.
 5. Utwórz plik edges.txt w folderze [/sumo/detectors](https://github.com/robert-czwartosz/estymacja-dod/blob/main/sumo/detectors) zawierającego krawędzie, na których będą zliczane pojazdy.
 Przykładowa zawartość:
